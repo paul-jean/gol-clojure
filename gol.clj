@@ -20,7 +20,7 @@
 (subvec [0 1 2] 0 2)
 
 (defn neighborhood [matrix row col]
-  (map #(subvec % (- col 1) (+ col 2)) (subvec matrix (- row 1) (+ row 2))))
+  (vec (map #(subvec % (- col 1) (+ col 2)) (subvec matrix (- row 1) (+ row 2)))))
 
 (defn new-val [nbhd]
   (let [s (sum-excluding-middle nbhd) center ((nbhd 1) 1)]
@@ -33,15 +33,25 @@
 
 (map #(subvec % 0 3) (subvec matrix 0 3))
 
+matrix
+
 (neighborhood matrix 1 1)
+(neighborhood matrix 1 2)
 
+;; [0,0] -> 0
 (new-val [[0 0 0] [0 0 0] [0 0 0]])
-
+;; [0,1] -> 0
+(new-val [[0 1 0] [0 0 0] [0 0 0]])
+;; [0,2] -> 0
+(new-val [[0 1 0] [1 0 0] [0 0 0]])
+;; [0, 3] -> 1
 (new-val [[0 0 1] [1 0 0] [0 1 0]])
-
-(count [1 2 3])
-
-(count [[1 2 3] [4 5 6]])
+;; [0, 4] -> 0
+(new-val [[0 0 1] [1 0 0] [1 1 0]])
+;; [0, 5] -> 0
+(new-val [[0 1 1] [1 0 0] [1 1 0]])
+;; [0, 8] -> 0
+(new-val [[1 1 1] [1 0 1] [1 1 1]])
 
 (defn pad-matrix [matrix]
   (let [cols (+ (count (matrix 0)) 2)]
@@ -49,13 +59,37 @@
   ))
 
 (pad-matrix [[0]])
+(pad-matrix [[0 0] [0 0]])
+
+(range 1 (- 3 1))
+(vec (range 1 4))
+
+(map #(new-val (neighborhood matrix %1 %2)) (range 1 (- 3 1)) (range 1 (- 4 1)))
+
+((fn [] (new-val (neighborhood matrix 1 1))))
+
+((fn [arg1 arg2] (new-val (neighborhood matrix arg1 arg2))) 1 1)
+
+(map (fn [arg1 arg2] (new-val (neighborhood matrix arg1 arg2))) (vec (range 1 (- 3 1))) (vec (range 1 (- 4 1))))
 
 (defn update [matrix]
   (let [rows (count matrix) cols (count (matrix 0))]
-    (map #(new-val (neighborhood matrix %1 %2)) (range 1 (- rows 1)) (range 1 (- cols 1)))))
+    (vec (map (fn [arg1 arg2] (new-val (neighborhood matrix arg1 arg2))) (vec (range 1 (- rows 1))) (vec (range 1 (- cols 1)))))))
 
-(def zeros (vec (replicate 4 (vec (replicate 4 0)))))
+(defn test-update [matrix]
+  (let [rows (count matrix) cols (count (matrix 0))]
+    (vec (map (fn [arg1 arg2] (println (neighborhood matrix arg1 arg2))) (vec (range 1 (- rows 1))) (vec (range 1 (- cols 1)))))))
+
+
+(map (fn [x] x) [1 2 3])
+
+(def zeros (pad-matrix (vec (replicate 3 (vec (replicate 3 0))))))
 
 zeros
 
+(count zeros)
+(vec (range 1 (- rows 1)))
+
 (update zeros)
+
+(test-update zeros)
