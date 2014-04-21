@@ -1,3 +1,8 @@
+(ns gol-clojure.core)
+
+(defn -main []
+  (println "Hello World!"))
+
 (defn sum-excluding-middle [matrix]
   (- (reduce + (flatten matrix)) (get-in matrix [1 1])))
 

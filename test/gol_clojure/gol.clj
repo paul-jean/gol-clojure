@@ -76,10 +76,15 @@ matrix
   (let [rows (count matrix) cols (count (matrix 0))]
     (vec (map (fn [arg1 arg2] (new-val (neighborhood matrix arg1 arg2))) (vec (range 1 (- rows 1))) (vec (range 1 (- cols 1)))))))
 
-(defn test-update [matrix]
+(defn update [matrix]
   (let [rows (count matrix) cols (count (matrix 0))]
-    (vec (map (fn [arg1 arg2] (println (neighborhood matrix arg1 arg2))) (vec (range 1 (- rows 1))) (vec (range 1 (- cols 1)))))))
-
+   (vec (map
+     (fn [c] (vec (map
+                   (fn [r] (new-val (neighborhood matrix r c)))
+                   (vec (range 1 (- rows 1)))
+                   )))
+     (vec (range 1 (- cols 1)))
+     ))))
 
 (map (fn [x] x) [1 2 3])
 
@@ -93,3 +98,20 @@ zeros
 (update zeros)
 
 (test-update zeros)
+
+(rand-int 2)
+(vec (repeatedly 5 (fn [] (vec (repeatedly 5 (fn [] (rand-int 2)))))))
+(defn rand-matrix [n]
+   (vec (repeatedly n (fn [] (vec (repeatedly n (fn [] (rand-int 2)))))))
+  )
+
+(rand-matrix 4)
+
+(def m (pad-matrix (rand-matrix 4)))
+
+m
+
+(update m)
+(update (pad-matrix (update m)))
+
+;; (reduce #(pad-matrix (update %)) )
