@@ -76,4 +76,14 @@ oo---o--------o-o---------ooo---o-o--o---oo-o----o
 Here `o` means "alive" and `-` means "dead" in the
 [Game of Life rules](http://en.wikipedia.org/wiki/Conway's_Game_of_Life).
 
-(My first clojure experience, at Clojure-NYC Hack Day.)
+## Screencast
+
+Here's a quick screencast from my terminal session:
+
+![GOL in Clojure](images/gol-clojure.gif "GOL in Clojure")
+
+## Credits
+
+This was my first clojure experience, at 
+[Clojure-NYC Hack Day](http://www.meetup.com/Clojure-NYC/events/175051742/). 
+Thanks to @sidraval for pairing on this with me!
