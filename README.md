@@ -82,6 +82,15 @@ Here's a quick screencast from my terminal session:
 
 ![GOL in Clojure](images/gol-clojure.gif "GOL in Clojure")
 
+### ( Notes on creating the screencast)
+
+I created the screencast using Quicktime Player 10.3, and converted the resulting 
+.mov file to a .gif using the `ffmpeg` and `gifsicle` utilities:
+
+```bash
+[rule146@pivotal-guest-6-254: Desktop]$ ffmpeg -i gol-clojure.mov -s 712x514 -f gif -r 9 - | gifsicle --optimize=3 > gol-clojure.gif
+```
+
 ## Credits
 
 This was my first clojure experience, at 
