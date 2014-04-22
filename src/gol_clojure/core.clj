@@ -1,7 +1,5 @@
-(ns gol-clojure.core)
-
-(defn -main []
-  (println "Hello World!"))
+(ns gol-clojure.core
+  (:require [clojure.string]))
 
 (defn sum-excluding-middle [matrix]
   (- (reduce + (flatten matrix)) (get-in matrix [1 1])))
@@ -27,5 +25,17 @@
          (range 1 (- cols 1)))))
 
 (defn update [matrix]
-    (let [rows (count matrix) cols (count (matrix 0))]
-      (pad-matrix (mapv #(vec (new-row matrix %)) (range 1 (- rows 1))))))
+    (let [padded (pad-matrix matrix) rows (count padded)]
+      (vec (map #(vec (new-row padded %)) (range 1 (- rows 1))))))
+
+(defn rand-matrix [n]
+   (vec (repeatedly n (fn [] (vec (repeatedly n (fn [] (rand-int 2))))))))
+
+(defn rand-matrix [n m]
+   (vec (repeatedly n (fn [] (vec (repeatedly m (fn [] (rand-int 2))))))))
+
+(defn print-row [row]
+  (clojure.string/join (vec (map #(format "%s" (if (= % 1) "o" "-")) row))))
+
+(defn matrix-string [matrix]
+  (clojure.string/join "\n" (vec (map #(print-row %) matrix))))

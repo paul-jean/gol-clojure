@@ -2,6 +2,10 @@
   (:require [gol-clojure.core :as gol]))
 
 (defn -main []
-  (println "Hello World!"))
+  (doseq
+    [state (iterate
+      (fn [matrix] (gol/update matrix))
+      (gol/rand-matrix 25 50))]
 
-(println (gol/sum-excluding-middle [[0 0 1] [1 1 0]]))
+    (println (gol/matrix-string state))
+    (read-line)))
