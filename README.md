@@ -1,4 +1,4 @@
-# gol-clojure
+# Game of Life in Clojure
 
 An implementation of the Game of Life in Clojure.
 
